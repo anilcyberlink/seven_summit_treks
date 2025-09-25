@@ -60,6 +60,9 @@
                             <?php $__currentLoopData = $footer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $row): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                 <li> <a href="<?php echo e(url(geturl($row->uri))); ?>"> <?php echo e($row->post_title); ?> </a> </li>
                             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            <li> <a href="<?php echo e(route('insurance-form')); ?>"> Insurance </a> </li>
+                            <li> <a href="<?php echo e(route('accident-waiver')); ?>"> Accident Waiver </a> </li>
+                            <li> <a href="<?php echo e(route('medical-assessment')); ?>"> Medical Assessment </a> </li>
                         </ul>
                     </div>
                 <?php endif; ?>

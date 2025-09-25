@@ -59,6 +59,16 @@ Route::post('subscribe', 'FrontendControllers\FrontpageController@subscribe')->n
 Route::get('/verify/{token}', 'FrontendControllers\FrontpageController@verifyUser')->name('verify-user');
 Route::get('/contact-verify/{token}', 'FrontendControllers\FrontpageController@verifyContact')->name('verify-contact');
 
+// Forms
+Route::get('insurance', 'FrontendControllers\FrontpageController@insurance')->name('insurance-form');
+Route::post('insurance-success', 'FrontendControllers\FrontpageController@insurance_success')->name('insurance_success');
+
+Route::get('accident-waiver', 'FrontendControllers\FrontpageController@accident_waiver')->name('accident-waiver');
+Route::post('accident-waiver-success', 'FrontendControllers\FrontpageController@accident_waiver_success')->name('accident-waiver-success');
+
+Route::get('medical-assessment', 'FrontendControllers\FrontpageController@medical_assessment')->name('medical-assessment');
+Route::post('medical-assessment-success', 'FrontendControllers\FrontpageController@medical_assessment_success')->name('medical-assessment-success');
+
 Route::post('trip-review', 'FrontendControllers\ReviewController@add_review')->name('add-review');
 
 // Normal Pages
@@ -166,25 +176,36 @@ Route::middleware(['auth'])->group(function () {
     Route::group(['prefix' => 'admin'], function () {
 
 
-    Route::get('send-newsletter', 'SendMailController@index')->name('send.newsletter');
-    Route::post('users-send-email', 'SendMailController@sendEmail')->name('ajax.send.email');
-    Route::post('newsletters', 'SendMailController@newsletter')->name('newsletter.submit');
-    Route::get('newsletter-index', 'SendMailController@newsindex')->name('newsletter.index');
-    Route::get('newsletter-edit/{id?}', 'SendMailController@newsedit')->name('newsletter.edit');
-    Route::post('newsletter-edit/{id?}', 'SendMailController@newsedit')->name('newsletter.edit');
-    Route::get('newsletter-delete/{id?}', 'SendMailController@newsdelete')->name('newsletter.delete');
-    Route::get('subscriber-create', 'SendMailController@usercreate')->name('subscriber.create');
-    Route::post('subscriber-create', 'SendMailController@usercreate')->name('subscriber.submit');
-    Route::get('subscriber-index', 'SendMailController@userindex')->name('subscriber.index');
-    Route::get('subscriber-edit/{id?}', 'SendMailController@useredit')->name('subscriber.update');
-    Route::post('subscriber-edit/{id?}', 'SendMailController@useredit')->name('subscriber.edit');
-    Route::get('subscriber-delete/{id?}', 'SendMailController@userdelete')->name('user.delete');
-    Route::get('admin/subscriber', 'DashboardController@subscribers')->name('subscribers.index');
-    Route::get('admin/subscriber-delete/{id?}', 'DashboardController@subscriber_delete')->name('subscriber.delete');
-    Route::get('create-newsletter', 'SendMailController@newsletter')->name('newsletter.create');
-    Route::get('payment-index', 'DashboardController@payment_index')->name('payment.index');
-    Route::get('payment-delete/{id?}', 'DashboardController@payment_delete')->name('payment.delete');
-});
+        Route::get('send-newsletter', 'SendMailController@index')->name('send.newsletter');
+        Route::post('users-send-email', 'SendMailController@sendEmail')->name('ajax.send.email');
+        Route::post('newsletters', 'SendMailController@newsletter')->name('newsletter.submit');
+        Route::get('newsletter-index', 'SendMailController@newsindex')->name('newsletter.index');
+        Route::get('newsletter-edit/{id?}', 'SendMailController@newsedit')->name('newsletter.edit');
+        Route::post('newsletter-edit/{id?}', 'SendMailController@newsedit')->name('newsletter.edit');
+        Route::get('newsletter-delete/{id?}', 'SendMailController@newsdelete')->name('newsletter.delete');
+        Route::get('subscriber-create', 'SendMailController@usercreate')->name('subscriber.create');
+        Route::post('subscriber-create', 'SendMailController@usercreate')->name('subscriber.submit');
+        Route::get('subscriber-index', 'SendMailController@userindex')->name('subscriber.index');
+        Route::get('subscriber-edit/{id?}', 'SendMailController@useredit')->name('subscriber.update');
+        Route::post('subscriber-edit/{id?}', 'SendMailController@useredit')->name('subscriber.edit');
+        Route::get('subscriber-delete/{id?}', 'SendMailController@userdelete')->name('user.delete');
+        Route::get('admin/subscriber', 'DashboardController@subscribers')->name('subscribers.index');
+        Route::get('admin/subscriber-delete/{id?}', 'DashboardController@subscriber_delete')->name('subscriber.delete');
+        Route::get('create-newsletter', 'SendMailController@newsletter')->name('newsletter.create');
+        Route::get('payment-index', 'DashboardController@payment_index')->name('payment.index');
+        Route::get('payment-delete/{id?}', 'DashboardController@payment_delete')->name('payment.delete');
+
+        //Forms
+        Route::get('medical-assessment', 'AdminControllers\Forms\FormController@medical_assessment')->name('admin.medical');
+        Route::get('medical-assessment/{id}', 'AdminControllers\Forms\FormController@medicalAssessment')->name('admin.medical.detail');
+        Route::delete('medical-assessment-delete/{id}', 'AdminControllers\Forms\FormController@medicalAssessment_delete')->name('admin.medical.delete');
+        Route::get('accident-waiver', 'AdminControllers\Forms\FormController@accident_waiver')->name('admin.accident');
+        Route::get('accident-waiver/{id}', 'AdminControllers\Forms\FormController@accidentWaiver')->name('admin.accident.detail');
+        Route::delete('accident-waiver-delete/{id}', 'AdminControllers\Forms\FormController@accidentWaiver_delete')->name('admin.accident.delete');
+        Route::get('insurance', 'AdminControllers\Forms\FormController@insurance')->name('admin.insurance');
+        Route::get('insurance/{id}', 'AdminControllers\Forms\FormController@insuranceDetail')->name('admin.insurance.detail');
+        Route::delete('insurance-delete/{id}', 'AdminControllers\Forms\FormController@insurance_delete')->name('admin.insurance.delete');
+    });
 
     Route::get('admin/dashboard', 'DashboardController@index')->name('dashboard');
 

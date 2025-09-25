@@ -422,6 +422,38 @@
                   </ul>
                  </li>
 
+                    <li class="">
+                        @if(Request::segment(2) == 'medical-assessment' || Request::segment(2) == 'accident-waiver' || Request::segment(2) == 'insurance')
+                            <a class="accordion-toggle menu-open">
+                        @else
+                            <a class="accordion-toggle">
+                        @endif
+                            <span class="fa fa-archive text-info"></span>
+                            <span class="sidebar-title"> Forms </span>
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="nav sub-nav">
+                            <li class="{{ (Request::segment(2) == 'medical-assessment')?'active':'' }}">
+                                <a href="{{ route('admin.medical') }}">
+                                    <span class="fa fa-arrows"></span>
+                                    Medical Assessment
+                                </a>
+                            </li>
+                            <li class="{{ (Request::segment(2) == 'accident-waiver')?'active':'' }}">
+                                <a href="{{ route('admin.accident') }}">
+                                    <span class="fa fa-arrows"></span>
+                                    Accident Waiver
+                                </a>
+                            </li>
+                            <li class="{{ (Request::segment(2) == 'insurance')?'active':'' }}">
+                                <a href="{{ route('admin.insurance') }}">
+                                    <span class="fa fa-arrows"></span>
+                                    Insurance
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
                     <li class="{{ (Request::segment(1) == 'admin-travel-guide-index'||Request::segment(1) == 'admin-travel-guide'||Request::segment(1) == 'admin-travel-guide-edit')?'active':'' }}">
                           <a href="{{ route('travel_guide_index') }}">
                               <span class="fa fa-book text-info"></span>

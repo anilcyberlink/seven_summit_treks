@@ -20,6 +20,15 @@ use App\Mail\SendMailContact;
 use App\Mail\TripBooking1;
 use App\Mail\TripBooking2;
 use App\Models\Banners\BannerModel;
+use App\Models\Forms\Insurance;
+use App\Models\Forms\PassportImage;
+use App\Models\Forms\AccidentWaiver;
+use App\Models\Forms\MedicalAssessment;
+use App\Models\Forms\MedicalHistory;
+use App\Models\Forms\DoctorReview;
+use App\Mail\AccidentWaiverMail;
+use App\Mail\InsuranceMail;
+use App\Mail\MedicalAssessmentMail;
 use App\Models\Expeditions\ExpeditionGroupModel;
 use App\Models\Expeditions\ExpeditionModel;
 use App\Models\Faqs\FaqModel;
@@ -1058,4 +1067,301 @@ class FrontpageController extends Controller
             }    
         }
     }
+    public function insurance()
+    {
+        $pagetypes= PageTypeModel::where(['is_menu'=>'1'])->orderBy('ordering','asc')->get();
+        
+        return view('themes.default.insurance',compact('pagetypes'));
+    }
+    public function insurance_success(Request $request)
+    {
+        $validatedData = $request->validate([
+            'fname' => 'required|string|max:255',
+            'country' => 'required|string',
+            'gender' => 'required|string|in:male,female,other',
+            'other_gender' => 'nullable|required_if:gender,other|string|max:255',
+            'bdate' => 'required|date|before:today',
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:500',
+            'zip' => 'required|string|max:10',
+            'passport' => 'required|array|min:1|max:5',
+            'passport.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
+            'secondpassport' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+        ]);
+        // dd($request->all());
+
+        DB::beginTransaction();
+        
+        try {
+            // Process second passport file
+            $secondFilename = null;
+            if ($request->hasFile('secondpassport')) {
+                $file = $request->file('secondpassport');
+                if ($file->isValid()) {
+                    $secondFilename = 'secondpassport_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                    $file->storeAs('insurance/passports', $secondFilename, 'public');
+                }
+            }
+            $insuranceApplication = Insurance::create([
+                'full_name' => $validatedData['fname'],
+                'country' => $validatedData['country'],
+                'gender' => $validatedData['gender'],
+                'other_gender' => $validatedData['other_gender'],
+                'date_of_birth' => $validatedData['bdate'],
+                'email' => $validatedData['email'],
+                'phone' => $validatedData['phone'],
+                'address' => $validatedData['address'],
+                'zip_code' => $validatedData['zip'],
+                'second_passport' => $secondFilename,
+            ]);
+            
+            if ($request->hasFile('passport')) {
+                foreach ($request->file('passport') as $index => $file) {
+                    if ($file->isValid()) {
+                        // Generate unique filename
+                        $filename = 'passport_' . $insuranceApplication->id . '_' . ($index + 1) . '_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
+                        
+                        // Store file
+                        $file->storeAs('insurance/passports', $filename, 'public');
+                        
+                        // Save to database
+                        PassportImage::create([
+                            'insurance_application_id' => $insuranceApplication->id,
+                            'file_name' => $filename,
+                        ]);
+                    }
+                }
+            }
+            DB::commit();
+
+            return new InsuranceMail($insuranceApplication);
+            // Mail::send(new InsuranceMail($insuranceApplication));
+
+            return redirect()->back()->with('message', 'Insurance Form Submitted successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'There was an error submitting your application. Please try again.');
+        }
+    }
+    
+    public function accident_waiver()
+    {
+        return view('themes.default.accident-waiver');
+    }
+    public function accident_waiver_success(Request $request)
+    {
+        // dd($request->all());
+        $validated = $request->validate([
+            'name'              => 'required|string|max:255',
+            'p_name'            => 'required|string|max:255',
+            'purchase'          => 'required|string|max:255',
+            'duration'          => 'required|string|max:255',
+            'email'             => 'required|email|max:255',
+            'contact_name'      => 'required|string|max:255',
+            'contact_relation'  => 'required|string|max:255',
+            'contact_number'    => 'required|string|max:20',
+            'contact_email'     => 'required|email|max:255',
+            'signature'         => 'nullable|string',
+            'today_date'        => 'required|date',
+            'w_name'            => 'required|string|max:255',
+            'w_date'            => 'required|date',
+            'w_signature'       => 'nullable|string',
+        ]);
+
+        try {
+            $accident = AccidentWaiver::create([
+                'name'              => $validated['name'],
+                'full_name'         => $validated['p_name'],     
+                'package'           => $validated['purchase'],   
+                'duration'          => $validated['duration'],
+                'email'             => $validated['email'],  
+                'ec_name'           => $validated['contact_name'], 
+                'ec_relation'       => $validated['contact_relation'],
+                'ec_number'         => $validated['contact_number'],
+                'ec_email'          => $validated['contact_email'],
+                'signature'         => $validated['signature'],
+                'sign_date'         => $validated['today_date'], 
+                'witness_name'      => $validated['w_name'],     
+                'witness_date'      => $validated['w_date'],     
+                'witness_signature' => $validated['w_signature'],
+            ]);
+            
+            return new AccidentWaiverMail($accident);
+            // Mail::send(new AccidentWaiverMail($accident));
+
+            return redirect()->back()->with('message', 'Accident waiver Form Submitted successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'There was an error submitting your application. Please try again.');
+        }
+    }
+    public function medical_assessment()
+    {
+        return view('themes.default.medical-assessment');
+    }
+    public function medical_assessment_success(Request $request)
+    {
+        // dd($request->all());
+        $validatedData = $request->validate([
+            'fullname'   => 'required|string|max:255',
+            'bdate'      => 'required|date',
+            'address'    => 'required|string|max:255',
+            'phone'      => 'required|string|max:20',
+            'email'      => 'required|email|max:255',
+            'gender'     => 'required|in:male,female,other',
+            'other_gender' => 'required_if:gender,other|string|nullable',
+            'exercise'   => 'required|in:0,1',
+            'frequency'  => 'required_if:exercise,1|string|nullable',
+            'smoke'      => 'required|in:0,1',
+            'alcohol'    => 'required|in:0,1',
+            'drink'      => 'required_if:alcohol,1|string|nullable',
+            'medication' => 'required|in:1,0',
+            'dose'       => 'required_if:medication,1|string|nullable',
+            'allergy'    => 'required|in:0,1',
+            'kind'       => 'required_if:allergy,1|string|nullable',
+            'reaction'   => 'required|in:0,1',
+            'reaction_detail' => 'required_if:reaction,1|string|nullable',
+            'illness' => 'required|string|max:500',
+            'doctor' => 'required|string|max:255', 
+            'signature' => 'nullable|string',
+            'signature_date' => 'required|date',
+
+            'prescription' => 'required|in:0,1',
+            'contact_lenses' => 'required|in:0,1',
+            'eye_problem' => 'required|in:0,1',
+            'hay_fever' => 'required|in:0,1',
+            'sinusitis' => 'required|in:0,1',
+            'nose_throat' => 'required|in:0,1',
+            'headache' => 'required|in:0,1',
+            'migraine' => 'required|in:0,1',
+            'fainting' => 'required|in:0,1',
+            'convulsions' => 'required|in:0,1',
+            'concussion' => 'required|in:0,1',
+            'sleepwalking' => 'required|in:0,1',
+            'depression' => 'required|in:0,1',
+            'mental_illness' => 'required|in:0,1',
+            'coughing_blood' => 'required|in:0,1',
+            'chronic_cough' => 'required|in:0,1',
+            'tb' => 'required|in:0,1',
+            'pneumothorax' => 'required|in:0,1',
+            'chest_colds' => 'required|in:0,1',
+            'asthma' => 'required|in:0,1',
+            'puffer' => 'required|in:0,1',
+            'other_chest' => 'required|in:0,1',
+            'operation' => 'required|in:0,1',
+            'indigestion' => 'required|in:0,1',
+            'vomiting_blood' => 'required|in:0,1',
+            'recurrent_vomiting' => 'required|in:0,1',
+            'jaundice' => 'required|in:0,1',
+            'malaria' => 'required|in:0,1',
+            'weight_loss' => 'required|in:0,1',
+            'ams' => 'required|in:0,1',
+            'hape' => 'required|in:0,1',
+            'hace' => 'required|in:0,1',
+            'frostbite' => 'required|in:0,1',
+            'heart_disease' => 'required|in:0,1',
+            'abnormal_blood_test' => 'required|in:0,1',
+            'high_blood_pressure' => 'required|in:0,1',
+            'rheumatic_fever' => 'required|in:0,1',
+            'chest_discomfort' => 'required|in:0,1',
+            'shortness_breath' => 'required|in:0,1',
+            'bronchitis_pneumonia' => 'required|in:0,1',
+            'pleurisy' => 'required|in:0,1',
+            'hernia' => 'required|in:0,1',
+            'joint_injury' => 'required|in:0,1',
+            'fractures' => 'required|in:0,1',
+            'paralysis' => 'required|in:0,1',
+            'kidney_bladder' => 'required|in:0,1',
+            'chronic_disease' => 'required|in:0,1',
+            'syphilis' => 'required|in:0,1',
+            'hiv' => 'required|in:0,1',
+            'hepatitis_bc' => 'required|in:0,1',
+            'diabetes' => 'required|in:0,1',
+            'blood_disease' => 'required|in:0,1',
+            'operations' => 'required|in:0,1',
+            'hospital' => 'required|in:0,1',
+            'life_insurance_rejected' => 'required|in:0,1',
+            'job_or_license_refused' => 'required|in:0,1',
+            'unable_to_work' => 'required|in:0,1',
+            'pregnant' => 'nullable|in:0,1',
+
+            'practitioner' => 'required|string|max:255',
+            'participant' => 'required|string|max:255', 
+            'age' => 'required|integer|min:1|max:120',
+            'examine_date' => 'required|date',
+            'height' => 'required|string|max:50',
+            'weight' => 'required|string|max:50',
+            'pressure' => 'required|string|max:50',
+            'pulse' => 'required|string|max:50',
+            'respiratory' => 'required|string|max:50',
+            'physical' => 'required|string|max:500',
+            'mental' => 'required|string|max:500',
+            'current' => 'required|in:0,1',
+            'impression' => 'required|string|max:2000',
+            'examiner' => 'required|string|max:255',
+            'location' => 'required|string|max:500',
+            'title' => 'required|string|max:255',
+            'contact' => 'required|string|max:20',
+            'doc_email' => 'required|email|max:255',
+            'doctor_signature' => 'required|string',
+            'doc_sign_date' => 'required|date'
+        ]);
+
+        DB::beginTransaction();
+        
+        try {
+            $medicalApplication = MedicalAssessment::create([
+                'fullname'        => $validatedData['fullname'],
+                'bdate'           => $validatedData['bdate'],
+                'address'         => $validatedData['address'],
+                'phone'           => $validatedData['phone'],
+                'email'           => $validatedData['email'],
+                'gender'          => $validatedData['gender'],
+                'other_gender'    => $validatedData['other_gender'] ?? null,
+                'exercise'        => $validatedData['exercise'],
+                'frequency'       => $validatedData['frequency'] ?? null,
+                'smoke'           => $validatedData['smoke'],
+                'alcohol'         => $validatedData['alcohol'],
+                'drink'           => $validatedData['drink'] ?? null,
+                'medication'      => $validatedData['medication'],
+                'dose'            => $validatedData['dose'] ?? null,
+                'allergy'         => $validatedData['allergy'],
+                'kind'            => $validatedData['kind'] ?? null,
+                'reaction'        => $validatedData['reaction'],
+                'reaction_detail' => $validatedData['reaction_detail'] ?? null,
+                'illness'         => $validatedData['illness'],
+                'doctor'          => $validatedData['doctor'],
+                'signature'       => $validatedData['signature'],
+                'signature_date'  => $validatedData['signature_date'],
+            ]);
+
+            // MedicalHistory
+            $historyData = $validatedData;
+            $historyData['medical_assessment_id'] = $medicalApplication->id;
+            MedicalHistory::create($historyData);
+
+            // DoctorReview
+            $reviewData = $validatedData;
+            $reviewData['medical_assessment_id'] = $medicalApplication->id;
+            DoctorReview::create($reviewData);
+
+            DB::commit();
+
+            return new MedicalAssessmentMail($medicalApplication);
+            // Mail::send(new MedicalAssessmentMail($medicalApplication));
+
+            return redirect()->back()->with('message', 'Medical Form Submitted successfully');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()->withInput()->with('error', 'There was an error submitting your application. Please try again.');
+        }
+    }
+
 }
