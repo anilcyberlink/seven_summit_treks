@@ -3,8 +3,8 @@
  @import url("uikit.min.css");
  @import url("typography.css");
  @import url("select2.min.css");
+ @import url("video-js.min.css");
 @import url("swiper.min.css");
-
  body {
      font-family: 'TT Norms Pro Regular';
      /* font-size: 18px; */
@@ -16,9 +16,7 @@
  .uk-background-cover {
      background-size: cover !important;
  }
-{
-    pointer-events: none;
-}
+
  .preloader {
      position: fixed;
      width: 100%;
@@ -48,7 +46,6 @@
     0% { -webkit-transform: rotate(0deg); }
     100% { -webkit-transform: rotate(360deg); }
   }
-  
   @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
@@ -116,11 +113,9 @@
  .uk-overlay-primary {
      background: rgb(12 12 12 / 40%);
  }
-
  .uk-overlay-banner {
-     background-image: linear-gradient(180deg, rgb(0 0 0 /60%), transparent);
- }
-
+    background-image: linear-gradient(180deg, rgb(0 0 0 /60%), transparent);
+}
  .uk-overlay-history {
      background: rgb(12 12 12 / 45%);
  }
@@ -287,17 +282,17 @@
  .uk-navbar-nav>li>a,
  .uk-navbar-toggle {
 
-     font-size: inherit;
+font-size: inherit;
 
-     /* min-height: 100px; */
+/* min-height: 100px; */
 
-     padding: 0 15px;
+padding: 0 15px;
 
-     font-family: TT Norms Pro, sans-serif;
+font-family: TT Norms Pro, sans-serif;
 
-     text-decoration: none;
+text-decoration: none;
 
- }
+}
 
  .uk-active.uk-sticky-below.uk-sticky-fixed .uk-navbar-item,
  .uk-active.uk-sticky-below.uk-sticky-fixed .uk-navbar-nav>li>a,
@@ -342,13 +337,12 @@
  .uk-navbar-nav>li>a:focus {
      color: var(--primary);
  }
-
  .uk-main-header:hover {
      background: var(--black);
      transition: 0.80s ease-in-out;
 
  }
-img.uk-logo-white, img.uk-logo-primary{
+ img.uk-logo-white, img.uk-logo-primary{
     
     width: 110px;
  }
@@ -453,18 +447,16 @@ img.uk-logo-white, img.uk-logo-primary{
  }
 
  a.uk-nav-slider-btn {
-     background: transparent;
-     border-radius: 50%;
-     border: solid 2px var(--primary);
-     color: var(--primary);
- }
+    background: transparent;
+    border-radius: 50%;
+    border: solid 2px var(--primary);
+    color: var(--primary);
+}
 
- a.uk-nav-slider-btn:hover,
- a.uk-nav-slider-btn:focus {
-     background: var(--bg-primary);
-     color: var(--white);
- }
-
+a.uk-nav-slider-btn:hover, a.uk-nav-slider-btn:focus {
+    background: var(--bg-primary);
+    color: var(--white);
+}
  .uk-mega-tab::before {
      border-color: var(--primary);
      border-left: solid 2px #0000002e;
@@ -506,9 +498,7 @@ img.uk-logo-white, img.uk-logo-primary{
      position: relative;
  }
 
- .uk-menu-list li a:hover,
- .uk-menu-list li a.active,
- .uk-menu-list li a.uk-active {
+ .uk-menu-list li a:hover {
      color: var(--primary);
 
  }
@@ -686,13 +676,33 @@ img.uk-logo-white, img.uk-logo-primary{
  }
 
  /* end header */
+
+
+
+ /* New banner */ 
+  
+.video-carousel
+{
+     background: #1e1e1e;
+      position: relative;
+     height: 100vh;
+    min-height: 500px;
+/*    max-height: 800px;*/
+}
+.hero-items {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
 /*css added*/
 .map-carousel{
     background: #1e1e1e;
       position: relative;
      height: 450px;
 }
-.hero-itemsa {
+/*end css added*/
+/*hero-itemsa class added*/
+.hero-items img, .hero-items video ,.hero-itemsa {
     width: 100%;
     height: 100%; 
      -o-object-fit: cover;
@@ -701,8 +711,20 @@ img.uk-logo-white, img.uk-logo-primary{
     object-position: center center;
     transition: opacity .25s ease;
  } 
-/*end css added*/
+ .swiper {
+      width: 100%;
+      height: 100%;
+    }
 
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+/* end New banner */
  /* hero banner content */
 
  .uk-hero-banner-content h1 {
@@ -1111,15 +1133,7 @@ img.uk-logo-white, img.uk-logo-primary{
  }
 
 
- .uk-slider-btn {
-     background: rgb(255, 255, 255);
-     height: 80px;
-     line-height: 80px;
-     width: 40px;
-     border-radius: 4px;
-     margin: -5px;
-     box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px;
- }
+ .uk-slider-btn { background: rgb(255, 255, 255); height: 80px; line-height: 80px; width: 40px; border-radius: 4px; margin: -5px; box-shadow: rgba(0, 0, 0, 0.2) 0px 2px 8px 0px; }
 
  /* end slider */
 
@@ -1154,23 +1168,22 @@ img.uk-logo-white, img.uk-logo-primary{
 
  /* end why with us */
  /* team */
+ 
+.uk-subnav-pill>*>:first-child {
+    padding: 8px 18px;
+    background: 0 0;
+    color: var(--white);
+    border-radius: 30px;
+    font-size: 16px;
+    text-transform: none;
+    border: solid 1px var(--bg-white)
+}
 
- .uk-subnav-pill>*>:first-child {
-     padding: 8px 18px;
-     background: 0 0;
-     color: var(--white);
-     border-radius: 30px;
-     font-size: 16px;
-     text-transform: none;
-     border: solid 1px var(--bg-white)
- }
-
- .uk-subnav-pill>.uk-active>a {
-     background-color: var(--bg-primary);
-     color: var(--white);
-     border-color: var(--primary);
- }
-
+.uk-subnav-pill>.uk-active>a {
+    background-color: var(--bg-primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
  .subnavbar .swiper-button-prev {
      left: 0;
  }
@@ -1217,8 +1230,8 @@ img.uk-logo-white, img.uk-logo-primary{
  }
 
  .team__single__image {
-     width: 200px;
-     height: 200px;
+     width: 150px;
+     height: 150px;
      overflow: hidden;
      border-radius: 50%;
      border: solid 5px #fff;
@@ -1300,19 +1313,17 @@ img.uk-logo-white, img.uk-logo-primary{
 
  /* testimonials inner list */
  .uk-member-img {
-     width: 130px;
-     height: 130px;
-     overflow: hidden;
-     border-radius: 50%;
-     margin: 15px auto;
- }
-
- .uk-member-img img {
-     width: 100%;
-     height: 100%;
-     object-fit: cover;
- }
-
+    width: 130px;
+    height: 130px;
+    overflow: hidden;
+    border-radius: 50%;
+    margin: 15px auto;
+}
+.uk-member-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
  .uk-card-body.uk-quote::before {
      content: "\f10d";
      font-family: "Font Awesome 5 Free";
@@ -1560,8 +1571,8 @@ img.uk-logo-white, img.uk-logo-primary{
 
  /* trip single page  */
  .uk-trip-facts img {
-     max-width: 55px;
- }
+    max-width: 55px;
+}
 
  .w-350 {
      max-width: 350px;
@@ -1574,52 +1585,47 @@ img.uk-logo-white, img.uk-logo-primary{
      position: relative;
      clear: both;
 
-
-
- }
-
- .uk-small-details-nav {
-     overflow: auto;
-     white-space: nowrap;
- }
-
- .uk-navbar-single {
-     list-style: none;
-     margin: 0;
-     padding: 0;
+     
 
  }
-
- .uk-navbar-single li {
-     display: inline-block;
+ .uk-small-details-nav
+ {
+    overflow: auto;
+    white-space: nowrap;
  }
-
+ .uk-navbar-single
+ {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+   
+ }
+ .uk-navbar-single li{
+    display: inline-block;
+ }
  .uk-navbar-single li a {
-     display: block;
-     padding: 5px 12px;
-     font-size: 14px;
-     position: relative;
+    display: block;
+    padding: 5px 12px;
+    font-size: 14px;
+    position: relative;
  }
-
- .uk-navbar-single li a.uk-active,
- .uk-navbar-single li a:hover {
-     background: rgb(0 0 0 / 22%);
-     color: var(--white);
- }
+ .uk-navbar-single li a.uk-active, .uk-navbar-single li a:hover {
+    background: rgb(0 0 0 / 22%);
+    color: var(--white);
+}
 
  .uk-small-details-nav::-webkit-scrollbar {
-     width: 2px;
-     height: 5px;
-     background-color: #ddd;
-
-
- }
-
- .uk-small-details-nav::-webkit-scrollbar-thumb {
-     background-color: #c29240;
-     border-radius: 30px;
- }
-
+    width: 2px;
+    height: 5px;
+    background-color:#ddd;
+   
+    
+  }
+  
+  .uk-small-details-nav::-webkit-scrollbar-thumb {
+    background-color: #c29240;
+    border-radius:30px;
+  }
  span.uk-trip-icons {
      background: var(--bg-primary);
      width: 40px;
@@ -1657,17 +1663,17 @@ img.uk-logo-white, img.uk-logo-primary{
 
  /* Itinerary */
  .uk-day {
-     background: var(--bg-primary);
-     color: var(--white);
-     box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
-     width: 60px;
-     height: auto;
-     padding: 0 10px;
-     line-height: 40px;
-     text-align: center;
-     border-radius: 4px;
-     font-size: 14px;
-     font-weight: bold;
+   background: var(--bg-primary);
+    color: var(--white);
+    box-shadow: 0 5px 15px rgb(0 0 0 / 8%);
+    width: 60px;
+    height: auto;
+    padding: 0 10px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: bold;
  }
 
  .uk-itinerary-small-title {
@@ -1772,11 +1778,12 @@ img.uk-logo-white, img.uk-logo-primary{
  }
 
  @media (max-width:959px) {
-
+     
      .uk-card-body.uk-quote::before,
-     .uk-card-body.uk-quote::after {
-         font-size: 1rem;
-     }
+    .uk-card-body.uk-quote::after
+    {
+       font-size: 1rem;
+    }
 
      .uk-trip-list-nav a.uk-next,
      .uk-trip-list-nav a.uk-previous {
@@ -1790,6 +1797,9 @@ img.uk-logo-white, img.uk-logo-primary{
          width: 14px;
          height: 14px
      }
+      .swiper-button-next, .swiper-button-prev{
+        display:none;    
+    }
  }
 
  .uk-inner-nav .uk-slider-container {
@@ -2022,7 +2032,10 @@ img.uk-logo-white, img.uk-logo-primary{
          right: -40%;
          bottom: -25%;
      }
-     img.uk-logo-primary, img.uk-logo-white{
+     .uk-main-header{
+        padding:0rem 0rem;
+    }
+    img.uk-logo-primary, img.uk-logo-white{
         width:110px;
      }
       img.uk-logo-dark{
@@ -2152,11 +2165,11 @@ img.uk-logo-white, img.uk-logo-primary{
  /* end booking */
  /* contact */
  i.fa.fa-envelope.uk-newsletter {
-     transform: rotate(16deg);
-     font-size: 10em;
+    transform: rotate(16deg);
+    font-size: 10em;
      opacity: .1;
      margin-left: 20px;
-     color: #c1bfbf;
+    color: #c1bfbf;
  }
 
  .uk-map-border {
@@ -2249,22 +2262,19 @@ img.uk-logo-white, img.uk-logo-primary{
  a#BackToTop svg polyline {
      stroke-width: 3px;
  }
- 
- .grecaptcha-badge {
-    visibility: hidden;
-}
 
  /* end footer */
 
 
-
+.grecaptcha-badge {
+    visibility: hidden;
+}
 
  /* responsive */
  @media (max-width: 768px) {
-     .uk-trip-facts img {
-         max-width: 40px;
-     }
-
+    .uk-trip-facts img {
+        max-width: 40px;
+    }
      .uk-hero-banner-content h1 {
          font-size: 3rem;
      }
@@ -2293,47 +2303,16 @@ img.uk-logo-white, img.uk-logo-primary{
      .w-350 {
          min-width: 100%;
      }
+    
  }
-  /* New banner */ 
-  
-.video-carousel
-{
-     background: #1e1e1e;
-      position: relative;
-     height: 100vh;
-    min-height: 500px;
-/*    max-height: 800px;*/
-}
-.hero-items {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-}
-
-.hero-items img, .hero-items video {
-    width: 100%;
-    height: 100%; 
-     -o-object-fit: cover;
-    object-fit: cover;
-    -o-object-position: center center;
-    object-position: center center;
-    transition: opacity .25s ease;
- } 
- .swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-/* end New banner */
+ 
+ /*swiper*/
+/*.swiper-button-prev, .swiper-container-rtl .swiper-button-next{*/
+/*    background-image:url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="120" height="120" viewBox="0 0 48 48"%3E%3Cpath fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="M31 36L19 24l12-12"%2F%3E%3C%2Fsvg%3E');*/
+/*}*/
+/*.swiper-button-next, .swiper-container-rtl .swiper-button-prev{*/
+/*    background-image:url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="68" height="68" viewBox="0 0 48 48"%3E%3Cpath fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round" stroke-width="4" d="m19 12l12 12l-12 12"%2F%3E%3C%2Fsvg%3E');*/
+/*}*/
 .swiper-button-prev, .swiper-container-rtl .swiper-button-next{
     background-image:url('data:image/svg+xml,%3Csvg xmlns="http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg" width="68" height="68" viewBox="0 0 24 24"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cpath d="M24 0v24H0V0zM12.593 23.258l-.011.002l-.071.035l-.02.004l-.014-.004l-.071-.035c-.01-.004-.019-.001-.024.005l-.004.01l-.017.428l.005.02l.01.013l.104.074l.015.004l.012-.004l.104-.074l.012-.016l.004-.017l-.017-.427c-.002-.01-.009-.017-.017-.018m.265-.113l-.013.002l-.185.093l-.01.01l-.003.011l.018.43l.005.012l.008.007l.201.093c.012.004.023 0 .029-.008l.004-.014l-.034-.614c-.003-.012-.01-.02-.02-.022m-.715.002a.023.023 0 0 0-.027.006l-.006.014l-.034.614c0 .012.007.02.017.024l.015-.002l.201-.093l.01-.008l.004-.011l.017-.43l-.003-.012l-.01-.01z"%2F%3E%3Cpath fill="%23e1a74e" d="M8.293 12.707a1 1 0 0 1 0-1.414l5.657-5.657a1 1 0 1 1 1.414 1.414L10.414 12l4.95 4.95a1 1 0 0 1-1.414 1.414z"%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E');
     
@@ -2367,45 +2346,38 @@ img.uk-logo-white, img.uk-logo-primary{
     opacity: 1;
     background: var(--primary);
 }
-@media (max-width: 959px){
-.swiper-button-next, .swiper-button-prev {
-    display: none;
-}
-}
  /* end  responsive*/
  
- /************************** By Sangam Starts *************************/
- .seo-h2-heading{
-    font-size: 2.23125rem!important;
-    line-height: 1.2!important;
+ .bg-fill{
+     background:var(--primary) !important;
+     color:white !important;
+     transition: all .5s;
  }
- .seo-h1-heading {
-    font-size: 1.7rem!important;
-    line-height: 1.3!important;
+  .bg-fill:hover{
+     background:transparent !important;
+     color:var(--primary) !important;
+     border:2px solid var(--primary) !important;
+ }
+  .step {
+  display: none;
 }
-.seo-h3-heading {
-    font-size: 1.5rem!important;
-    line-height: 1.4!important;
+
+.step.active {
+  display: block;
 }
-.seo-banner-h2{
-    font-size: 4rem!important;
-    line-height: 1.2!important;
+.border-bottom{
+    border-bottom: 1px solid #80808030;
 }
-.seo-translateX-0{
-    transform: translateX(0px)!important;
+.w-220{
+    width:220px;
+    margin-bottom: 7px;
 }
- @media (min-width: 960px) {
-    .seo-h2-heading {
-        font-size: 2.625rem!important;
+@media(max-width:580px) {
+        .choice-responsive {
+        flex-direction: column !important;
+        padding-bottom: 8px !important;
     }
-    .seo-h1-heading{
-        font-size: 2rem!important;
-    }
-}
-@media (max-width: 768px) {
-    .seo-banner-h2 {
-        font-size: 3rem!important;
-    }
-}
- /************************** By Sangam Ends ***************************/
+} 
  /*# sourceMappingURL=uikit.min.css.map
+ 
+ 

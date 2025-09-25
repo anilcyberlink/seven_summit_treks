@@ -9,7 +9,7 @@ Php  version : ^8.1,
 ## Backup Latest Details
 Last Code Backup : 09/18/2025,
 
-Last Database Backup : 09/18/2025
+Last Database Backup : 09/18/2025 (sevensummit_latest is new db)
 
 ## Backup Previous Details
 Previous Code Backup : --/--/----,

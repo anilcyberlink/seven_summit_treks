@@ -60,6 +60,9 @@
                             @foreach ($footer as $row)
                                 <li> <a href="{{ url(geturl($row->uri)) }}"> {{ $row->post_title }} </a> </li>
                             @endforeach
+                            <li> <a href="{{ route('insurance-form') }}"> Insurance </a> </li>
+                            <li> <a href="{{ route('accident-waiver') }}"> Accident Waiver </a> </li>
+                            <li> <a href="{{ route('medical-assessment') }}"> Medical Assessment </a> </li>
                         </ul>
                     </div>
                 @endif

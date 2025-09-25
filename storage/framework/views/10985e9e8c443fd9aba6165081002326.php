@@ -58,9 +58,9 @@
 </head>
 <!--<body oncontextmenu="return false">-->
 <body>
-<div id="preloader" class="preloader uk-flex uk-flex-middle uk-flex-center">
+<!-- <div id="preloader" class="preloader uk-flex uk-flex-middle uk-flex-center">
 <div class="loader"> <img src="<?php echo e(asset('themes-assets/images/loader.svg')); ?>"> </div>
-</div>
+</div> -->
 <header class="uk-position-top">
 <!-- end mobile top menu -->
 <div class="uk-main-header uk-navbar-container uk-navbar-transparent" uk-sticky="animation: uk-animation-slide-top uk-animation-slow uk-transform-origin-bottom-center">
