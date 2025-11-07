@@ -121,6 +121,8 @@
                         for my safety and well-being for the diagnosis and/or treatment of any injuries which may arise
                         out of my participation in this expedition in the event that my emergency contact cannot be
                         reached through the exercise of reasonable efforts. <br><br>
+                        <input type="hidden" name="consent" value="0">
+                        <input type="checkbox" name="consent" value="1" required/>
                         I consent to hospital, medical, or surgical diagnosis and/or treatment to be rendered necessary
                         or advisable for my safety and well-being for any injuries which may arise out of my
                         participation in this expedition.

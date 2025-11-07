@@ -24,5 +24,6 @@ class AccidentWaiver extends Model
         'witness_name',
         'witness_date',
         'witness_signature',
+        'consent',
     ];
 }

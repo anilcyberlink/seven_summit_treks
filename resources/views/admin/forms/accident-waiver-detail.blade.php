@@ -98,6 +98,17 @@
                         <p>&nbsp;</p>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label><strong>Consent:</strong></label>
+                        @if ($waiver->consent)
+                            ✅
+                        @else
+                            ❌
+                        @endif
+                    </div>
+                </div>
                 
             </div>
         </div>

@@ -98,6 +98,17 @@
                         <p>&nbsp;</p>
                     </div>
                 </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label><strong>Consent:</strong></label>
+                        <?php if($waiver->consent): ?>
+                            ✅
+                        <?php else: ?>
+                            ❌
+                        <?php endif; ?>
+                    </div>
+                </div>
                 
             </div>
         </div>
