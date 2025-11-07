@@ -41,6 +41,10 @@
                     <td><?php echo e($medicalData->phone); ?></td>
                 </tr>
                 <tr>
+                    <td><strong>Email</strong></td>
+                    <td><?php echo e($medicalData->email); ?></td>
+                </tr>
+                <tr>
                     <td><strong>Gender</strong></td>
                     <td>
                         <?php echo e(ucfirst($medicalData->gender)); ?>
@@ -111,6 +115,10 @@
                 <tr>
                     <td><strong>Doctor</strong></td>
                     <td><?php echo e($medicalData->doctor); ?></td>
+                </tr>
+                <tr>
+                    <td><strong>Doctor's Comment</strong></td>
+                    <td><?php echo e($medicalData->doctor_comment); ?></td>
                 </tr>
                 <tr>
                     <td><strong>Signature Date</strong></td>

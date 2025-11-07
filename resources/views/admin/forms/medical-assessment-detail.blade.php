@@ -112,6 +112,10 @@
                                 <p>-</p>
                             @endif
                         </div>
+                        <div class="col-md-6 mb-6">
+                            <strong>Doctor's Comment:</strong>
+                            <p>{{ $medical->doctor_comment }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

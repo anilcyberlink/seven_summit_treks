@@ -381,6 +381,13 @@
 
                         <p class="uk-text-justify">to give medical opinion as to my fitness, or inability to climb/trek. I also authorize him/her to obtain or supply medical information regarding me to other doctors as may be necessary for medical purposes in my personal interest.</p>
 
+                        <div class="uk-width-1-1">
+                            <label class="uk-margin-small uk-display-block" for="doctor_comment">Any Doctor's Comment <span class="text-red">*</span>
+                            </label>
+                            <textarea class="uk-input" type="text" id="doctor_comment" name="doctor_comment" placeholder="" value="{{ old('doctor_comment') }}" > </textarea>
+                        </div>
+                        <br>
+
                         <div class="uk-flex uk-margin-bottom">
                             <label class="uk-margin-right uk-display-block" for="sign">Sign:<span class="text-red">*</span>
                             </label>
@@ -691,6 +698,26 @@
         toggleRequired("medication", "dose");
         toggleRequired("allergy", "kind");
         toggleRequired("reaction", "reaction_detail");
+
+        const markAllNo = document.getElementById("markAllNo");
+
+        if (markAllNo) {
+            markAllNo.addEventListener("change", function () {
+                // Find the parent "step" that contains this checkbox
+                const currentStep = markAllNo.closest(".step");
+
+                if (!currentStep) return;
+
+                // Select all radio buttons with value="0" inside this step
+                const noRadios = currentStep.querySelectorAll('input[type="radio"][value="0"]');
+
+                if (this.checked) {
+                    noRadios.forEach(radio => {
+                        radio.checked = true;
+                    });
+                }
+            });
+        }
     });
 </script>
 

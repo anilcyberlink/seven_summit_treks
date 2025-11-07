@@ -1041,4 +1041,11 @@
             </ul>
         </div>
     </div>
+</div>
+<!-- ✅ Mark All as No -->
+<div class="uk-margin">
+    <label>
+        <input type="checkbox" id="markAllNo" class="uk-checkbox uk-margin-small-right">
+        Mark all as “No”
+    </label>
 </div><?php /**PATH D:\xampp\htdocs\seven_summit\resources\views/themes/default/common/choice.blade.php ENDPATH**/ ?>

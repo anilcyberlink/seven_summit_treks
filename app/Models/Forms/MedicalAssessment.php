@@ -28,7 +28,7 @@ class MedicalAssessment extends Model
         'allergy',
         'kind',
         'reaction',
-        'reaction_detail','illness', 'doctor', 'signature', 'signature_date'
+        'reaction_detail','illness','doctor_comment', 'doctor', 'signature', 'signature_date'
     ];
     public function doctorReview()
     {
