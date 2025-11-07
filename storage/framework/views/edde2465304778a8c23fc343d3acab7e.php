@@ -113,6 +113,10 @@
                                 <p>-</p>
                             <?php endif; ?>
                         </div>
+                        <div class="col-md-6 mb-6">
+                            <strong>Doctor's Comment:</strong>
+                            <p><?php echo e($medical->doctor_comment); ?></p>
+                        </div>
                     </div>
                 </div>
             </div>

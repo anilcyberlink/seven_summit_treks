@@ -111,6 +111,10 @@
                     <td>{{ $medicalData->doctor }}</td>
                 </tr>
                 <tr>
+                    <td><strong>Doctor's Comment</strong></td>
+                    <td>{{ $medicalData->doctor_comment }}</td>
+                </tr>
+                <tr>
                     <td><strong>Signature Date</strong></td>
                     <td>{{ $medicalData->signature_date }}</td>
                 </tr>
