@@ -1169,6 +1169,7 @@ class FrontpageController extends Controller
             'w_name'            => 'required|string|max:255',
             'w_date'            => 'required|date',
             'w_signature'       => 'nullable|string',
+            'consent'           => 'required|boolean',
         ]);
 
         try {
@@ -1187,6 +1188,7 @@ class FrontpageController extends Controller
                 'witness_name'      => $validated['w_name'],     
                 'witness_date'      => $validated['w_date'],     
                 'witness_signature' => $validated['w_signature'],
+                'consent'           => $validated['consent'],
             ]);
             
             return new AccidentWaiverMail($accident);
