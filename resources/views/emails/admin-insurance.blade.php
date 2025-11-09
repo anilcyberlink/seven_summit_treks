@@ -56,6 +56,26 @@
                     <td><strong>Zip Code</strong></td>
                     <td>{{ $insurance->zip_code }}</td>
                 </tr>
+                <tr>
+                    <td><strong>Nominee Name</strong></td>
+                    <td>{{ $insurance->nominee_name }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nominee Age</strong></td>
+                    <td>{{ $insurance->nominee_age }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nominee Email</strong></td>
+                    <td>{{ $insurance->nominee_email }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nominee Contact</strong></td>
+                    <td>{{ $insurance->nominee_contact }}</td>
+                </tr>
+                <tr>
+                    <td><strong>Nominee Relation</strong></td>
+                    <td>{{ $insurance->nominee_relation }}</td>
+                </tr>
             </table>
             <div style="display:flex; flex-wrap:wrap; gap:10px;">
 

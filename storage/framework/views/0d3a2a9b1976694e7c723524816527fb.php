@@ -384,7 +384,7 @@
                         <div class="uk-width-1-1">
                             <label class="uk-margin-small uk-display-block" for="doctor_comment">Any Doctor's Comment <span class="text-red">*</span>
                             </label>
-                            <textarea class="uk-input" type="text" id="doctor_comment" name="doctor_comment" placeholder="" value="<?php echo e(old('doctor_comment')); ?>" required> </textarea>
+                            <textarea class="uk-input" type="text" id="doctor_comment" name="doctor_comment" placeholder="" value="<?php echo e(old('doctor_comment')); ?>" > </textarea>
                         </div>
                         <br>
 
