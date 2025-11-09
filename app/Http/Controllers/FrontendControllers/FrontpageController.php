@@ -1075,6 +1075,7 @@ class FrontpageController extends Controller
     }
     public function insurance_success(Request $request)
     {
+        // dd($request->all());
         $validatedData = $request->validate([
             'fname' => 'required|string|max:255',
             'country' => 'required|string',
@@ -1088,8 +1089,12 @@ class FrontpageController extends Controller
             'passport' => 'required|array|min:1|max:5',
             'passport.*' => 'file|mimes:jpg,jpeg,png,pdf|max:2048',
             'secondpassport' => 'nullable|file|mimes:jpg,jpeg,png,pdf|max:5120',
+            'nominee_age' => 'required|integer|min:1|max:100',
+            'nominee_name' => 'required|string|max:255',
+            'nominee_email' => 'required|email|max:255',
+            'nominee_contact' => 'required|string|max:20',
+            'nominee_relation' => 'required|string|max:100',
         ]);
-        // dd($request->all());
 
         DB::beginTransaction();
         
@@ -1114,6 +1119,11 @@ class FrontpageController extends Controller
                 'address' => $validatedData['address'],
                 'zip_code' => $validatedData['zip'],
                 'second_passport' => $secondFilename,
+                'nominee_name'           => $validatedData['nominee_name'],
+                'nominee_age'            => $validatedData['nominee_age'],
+                'nominee_email'          => $validatedData['nominee_email'],
+                'nominee_contact'        => $validatedData['nominee_contact'],
+                'nominee_relation'       => $validatedData['nominee_relation'],
             ]);
             
             if ($request->hasFile('passport')) {

@@ -20,6 +20,11 @@ class Insurance extends Model
         'address',
         'zip_code',
         'second_passport',
+        'nominee_name',
+        'nominee_email',
+        'nominee_age',
+        'nominee_relation',
+        'nominee_contact',
     ];
     public function passports()
     {

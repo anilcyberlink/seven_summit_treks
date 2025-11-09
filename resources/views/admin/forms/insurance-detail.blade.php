@@ -65,6 +65,35 @@
                         <p>&nbsp;</p>
                     </div>
                 </div>
+                
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label><strong>Nominee Name:</strong></label>
+                        <p>{{ $insurance->nominee_name ?? '-' }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><strong> Nominee Email:</strong></label>
+                        <p>{{ $insurance->nominee_email ?? '-' }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><strong> Nominee Age:</strong></label>
+                        <p>{{ $insurance->nominee_age ?? '-' }}</p>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label><strong>Nominee Contact:</strong></label>
+                        <p>{{ $insurance->nominee_contact ?? '-' }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <label><strong>Nominee Relation:</strong></label>
+                        <p>{{ $insurance->nominee_relation ?? '-' }}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <!-- keep symmetry -->
+                        <p>&nbsp;</p>
+                    </div>
+                </div>
 
                 <!-- Secondary Passport -->
                 <!-- <div class="row mb-3">

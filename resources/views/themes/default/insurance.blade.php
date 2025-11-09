@@ -7,7 +7,7 @@
         <div class="uk-width-1-1 uk-position-relative" style="z-index: 99;">
             <div class="uk-container    uk-position-relative" uk-scrollspy="cls: uk-animation-fade;  delay: 500; repeat: false">
                 <div class=" uk-margin-medium uk-width-large">
-                    <h1 class="theme-font-extra-bold text-white uk-margin-small" uk-scrollspy="cls: uk-animation-slide-top-small;   delay: 400; repeat: false;"><span class="uk-text-bold">Insurance Form</span> </h1>
+                    <h1 class="theme-font-extra-bold text-white uk-margin-small" uk-scrollspy="cls: uk-animation-slide-top-small;   delay: 400; repeat: false;"><span class="uk-text-bold">Insurance Form </span> </h1>
                 </div>
             </div>
         </div>
@@ -143,6 +143,43 @@
                                     <div id="secondpassport-file" class="uk-margin-small-top uk-text-small uk-text-muted"></div>
                                 </div>
                             </div>
+
+                            <p class="uk-text-bold uk-margin-remove-bottom">Nominee Information</p>
+                            <div class="nominee-box uk-padding-small uk-margin">
+                                <div class="uk-grid-small" uk-grid>
+                                    <!-- Full Name -->
+                                    <div class="uk-width-1-2@s">
+                                        <label class="uk-margin-small uk-display-block" for="nominee_name">Nominee Name
+                                            <span class="text-red">*</span>
+                                        </label>
+                                        <input class="uk-input" type="text" id="nominee_name" name="nominee_name" placeholder="">
+                                    </div>
+                                    <div class="uk-width-1-2@s">
+                                        <label class="uk-margin-small uk-display-block" for="nominee_age">Age
+                                            <span class="text-red">*</span>
+                                        </label>
+                                        <input class="uk-input" type="number" id="nominee_age" name="nominee_age" placeholder="" min="1" max="100">
+                                    </div>
+                                    <div class="uk-width-1-2@s">
+                                        <label class="uk-margin-small uk-display-block" for="nominee_email">Email
+                                            <span class="text-red">*</span>
+                                        </label>
+                                        <input class="uk-input" type="email" id="nominee_email" name="nominee_email" placeholder="">
+                                    </div>
+                                    <div class="uk-width-1-2@s">
+                                        <label class="uk-margin-small uk-display-block" for="nominee_contact">Contact Number
+                                            <span class="text-red">*</span>
+                                        </label>
+                                        <input class="uk-input" type="text" id="nominee_contact" name="nominee_contact" placeholder="">
+                                    </div>
+                                    <div class="uk-width-1-2@s">
+                                        <label class="uk-margin-small uk-display-block" for="nominee_relation">Relationship with Policyholder
+                                            <span class="text-red">*</span>
+                                        </label>
+                                        <input class="uk-input" type="text" id="nominee_relation" name="nominee_relation" placeholder="">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="uk-booking-footer">
                             <div class="uk-flex uk-flex-middle uk-flex-center">
@@ -165,7 +202,16 @@
     </div>
     <div id="uk-stop-sticky" class="uk-clearfix"></div>
 </section>
-
+<style>
+    .nominee-box {
+        border: 1px solid rgba(0, 0, 0, 0.2); /* thin black outline */
+        border-radius: 4px;
+    }
+    .nominee-box h4 {
+        margin-top: 0;
+        font-weight: bold;
+    }
+</style>
 <script>
 // Handle gender radio buttons
 const radios = document.querySelectorAll('input[name="gender"]');
