@@ -187,7 +187,8 @@ return [
         App\Providers\SidebarInnerComposerProvider::class, 
         App\Providers\SidebarBlogComposerProvider::class, 
         App\Providers\FrontpageComposerProvider::class, 
-        App\Providers\SidebarNewsComposerProvider::class, 
+        App\Providers\SidebarNewsComposerProvider::class,
+        App\Providers\GoogleDriveServiceProvider::class,
 
         UniSharp\LaravelFilemanager\LaravelFilemanagerServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,

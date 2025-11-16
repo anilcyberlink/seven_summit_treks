@@ -22,8 +22,128 @@ use App\Http\Controllers\PaymentRequestController;
 //     });
 //     return 'Test email sent!';
 // });
+Route::get('/test-google-drive', function () {
+    try {
+        // Test write
+        $testContent = 'Test file created at ' . now();
+        $result = Storage::disk('google')->put('test-connection.txt', $testContent);
+        
+        // Test read
+        $exists = Storage::disk('google')->exists('test-connection.txt');
+        $files = Storage::disk('google')->allFiles();
+        
+        return response()->json([
+            'write_result' => $result,
+            'file_exists' => $exists,
+            'all_files' => $files,
+            'config' => [
+                'service_account_file' => config('filesystems.disks.google.service_account_file'),
+                'file_exists' => file_exists(config('filesystems.disks.google.service_account_file')),
+                'folder_id' => config('filesystems.disks.google.folder'),
+            ]
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ]);
+    }
+});
+Route::get('/test-google-auth', function () {
+    try {
+        $jsonPath = storage_path('app/google/credentials.json');
+        $jsonContent = json_decode(file_get_contents($jsonPath), true);
+        
+        $client = new \Google\Client();
+        $client->setAuthConfig($jsonPath);
+        $client->setScopes([\Google\Service\Drive::DRIVE]);
+        
+        $service = new \Google\Service\Drive($client);
+        
+        // Try to list files in the folder
+        $folderId = config('filesystems.disks.google.folder');
+        $response = $service->files->listFiles([
+            'q' => "'{$folderId}' in parents",
+            'pageSize' => 10,
+            'fields' => 'files(id, name)'
+        ]);
+        
+        return response()->json([
+            'auth_success' => true,
+            'service_account_email' => $jsonContent['client_email'] ?? 'not found',
+            'files_in_folder' => $response->getFiles(),
+            'folder_id' => $folderId,
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json([
+            'error' => $e->getMessage(),
+            'json_path' => $jsonPath ?? null,
+            'json_readable' => isset($jsonPath) ? is_readable($jsonPath) : false,
+        ]);
+    }
+});
+Route::get('/test-direct-upload', function () {
+    try {
+        $client = new \Google\Client();
+        $client->setAuthConfig(storage_path('app/google/credentials.json'));
+        $client->setScopes([\Google\Service\Drive::DRIVE]);
+        
+        $service = new \Google\Service\Drive($client);
+        
+        $fileMetadata = new \Google\Service\Drive\DriveFile([
+            'name' => 'test-' . time() . '.txt',
+            'parents' => [config('filesystems.disks.google.folder')]
+        ]);
+        
+        $content = 'Test upload at ' . now();
+        
+        $file = $service->files->create($fileMetadata, [
+            'data' => $content,
+            'mimeType' => 'text/plain',
+            'uploadType' => 'multipart'
+        ]);
+        
+        return response()->json([
+            'success' => true,
+            'file_id' => $file->id,
+            'file_name' => $file->name,
+            'message' => 'Check your Google Drive folder now!'
+        ]);
+        
+    } catch (\Exception $e) {
+        return response()->json(['error' => $e->getMessage()]);
+    }
+});
+Route::get('/google/auth', function () {
+    $client = new \Google\Client();
+    $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+    $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+    $client->setRedirectUri(url('/google/callback'));
+    $client->addScope(\Google\Service\Drive::DRIVE_FILE);
+    $client->setAccessType('offline');
+    $client->setPrompt('consent');
+    
+    return redirect($client->createAuthUrl());
+});
 
- Route::middleware(['throttle:60,1'])->group(function () {
+Route::get('/google/callback', function () {
+    $client = new \Google\Client();
+    $client->setClientId(env('GOOGLE_DRIVE_CLIENT_ID'));
+    $client->setClientSecret(env('GOOGLE_DRIVE_CLIENT_SECRET'));
+    $client->setRedirectUri(url('/google/callback'));
+    
+    $token = $client->fetchAccessTokenWithAuthCode(request('code'));
+    
+    return response()->json([
+        'message' => 'Add these to your .env file:',
+        'GOOGLE_DRIVE_REFRESH_TOKEN' => $token['refresh_token'] ?? 'Error: No refresh token',
+    ]);
+});
+
+
+Route::middleware(['throttle:60,1'])->group(function () {
 Route::get('/', 'FrontendControllers\FrontpageController@index');
 // Auth::routes();
 /* Authentication Routes... */

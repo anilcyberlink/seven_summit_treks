@@ -79,6 +79,7 @@ use Illuminate\Support\Facades\Validator;
 use App\Models\Pages\PageDocModel;
 use App\Models\Posts\PostImageModel;
 use App\Models\Travels\TripGroupModel;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -1106,6 +1107,18 @@ class FrontpageController extends Controller
                 if ($file->isValid()) {
                     $secondFilename = 'secondpassport_' . time() . '_' . uniqid() . '.' . $file->getClientOriginalExtension();
                     $file->storeAs('insurance/passports', $secondFilename, 'public');
+                    // dd('test1',$request->all());
+                    try {
+                        $result = Storage::disk('google')->putFileAs('insurance/passports', $file, $secondFilename);
+                        // dd('test2 - Google Drive upload successful');
+                        // dd([
+                        //     'upload_result' => $result,
+                        //     'file_exists' => Storage::disk('google')->exists('insurance/passports/' . $secondFilename),
+                        //     'all_files' => Storage::disk('google')->allFiles(),
+                        // ]);
+                    } catch (\Exception $e) {
+                        dd('Google Drive Error:', $e->getMessage(), $e->getTraceAsString());
+                    }
                 }
             }
             $insuranceApplication = Insurance::create([
@@ -1134,7 +1147,7 @@ class FrontpageController extends Controller
                         
                         // Store file
                         $file->storeAs('insurance/passports', $filename, 'public');
-                        
+                        Storage::disk('google')->putFileAs('insurance/passports', $file, $filename);
                         // Save to database
                         PassportImage::create([
                             'insurance_application_id' => $insuranceApplication->id,
