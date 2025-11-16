@@ -11,13 +11,14 @@
         "php": "^8.1",
         "anhskohbo/no-captcha": "^3.6.0",
         "guzzlehttp/guzzle": "^7.2",
+        "intervention/image": "2.7.2",
         "laravel/framework": "^10.10",
         "laravel/tinker": "^2.8",
+        "masbug/flysystem-google-drive-ext": "^2.4",
         "spatie/laravel-analytics": "^5.4.0",
-        "unisharp/laravel-filemanager": "^2.9.1",
-        "web-token/jwt-framework": "3.4.6",
         "tinymce/tinymce": "^7.1",
-        "intervention/image": "2.7.2"
+        "unisharp/laravel-filemanager": "^2.9.1",
+        "web-token/jwt-framework": "3.4.6"
     },
     "require-dev": {
        "spatie/laravel-ignition": "^2.0",
